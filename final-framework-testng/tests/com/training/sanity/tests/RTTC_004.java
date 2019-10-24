@@ -27,7 +27,7 @@ public class RTTC_004 {
 	private WebDriver driver;
 	private String baseUrl;
 	private static Properties properties;
-
+	
 	@BeforeClass
 	public void beforeClass() throws IOException {
 		properties = new Properties();
