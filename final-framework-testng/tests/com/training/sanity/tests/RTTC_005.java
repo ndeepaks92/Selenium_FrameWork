@@ -2,6 +2,7 @@ package com.training.sanity.tests;
 
 import org.testng.annotations.Test;
 
+import com.training.pom.RTTC_005_POM;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
 
@@ -10,19 +11,17 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 
 public class RTTC_005 {
 	private WebDriver driver;
 	private String baseUrl;
 	private static Properties properties;
+	private RTTC_005_POM RTTC005;
 	
 	  @BeforeClass
 	  public void beforeClass() throws IOException {
@@ -34,50 +33,47 @@ public class RTTC_005 {
   @BeforeMethod
   public void beforeMethod() {
 	  	driver = DriverFactory.getDriver(DriverNames.CHROME);
+	  	RTTC005 = new RTTC_005_POM(driver);
 		baseUrl = properties.getProperty("baseURL");
 		driver.get(baseUrl);
 		
-	  	driver.findElement(By.xpath("//i[@class='fa fa-user-o']")).click();
-	  	driver.findElement(By.xpath("//input[@id='input-email']")).sendKeys("Retail_test005@ibm.com");
-	  	driver.findElement(By.xpath("//input[@id='input-password']")).sendKeys("Qwerty1234");
-	  	driver.findElement(By.xpath("//input[@class='btn btn-primary']")).click();
+		RTTC005.ClickLoginRegisterButton();
+		RTTC005.sendUserName("Retail_test005@ibm.com");
+		RTTC005.sendPassword("Qwerty1234");
+		RTTC005.ClickLoginButton();
+
   }
   
   @Test
   public void test05() throws InterruptedException {
-	  	driver.findElement(By.xpath("//a[contains(text(),'Edit your account information')]")).click();
+	  	RTTC005.ClickEditAccountInfo();
 	  	
-	  	String PageHeader = driver.findElement(By.xpath("//legend[contains(text(),'Your Personal Details')]")).getText();
-	  	Assert.assertTrue(PageHeader.contains("Your Personal Details"));
+	  	Assert.assertTrue(RTTC005.PageHeader().contains("Your Personal Details"));
 	  	
-	  	Assert.assertTrue(driver.findElement(By.xpath("//label[contains(text(),'First Name')]")).isDisplayed());
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-firstname']")).getAttribute("value"),"Retail");
-	  	Assert.assertTrue(driver.findElement(By.xpath("//label[contains(text(),'Last Name')]")).isDisplayed());
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-lastname']")).getAttribute("value"),"Test005");
-	  	Assert.assertTrue(driver.findElement(By.xpath("//label[contains(text(),'E-Mail')]")).isDisplayed());
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-email']")).getAttribute("value"),"Retail_test005@ibm.com");
-	  	Assert.assertTrue(driver.findElement(By.xpath("//label[contains(text(),'Telephone')]")).isDisplayed());
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-telephone']")).getAttribute("value"),"1234567890");
+	  	RTTC005.Label_FN();
+	  	RTTC005.Label_LN();
+	  	RTTC005.Label_Email();
+	  	RTTC005.LabelValue_TN();
+	  	Assert.assertEquals(RTTC005.LabelValue_FN(),"Retail");
+	  	Assert.assertEquals(RTTC005.LabelValue_LN(),"Test005");
+	  	Assert.assertEquals(RTTC005.LabelValue_Email(),"Retail_test005@ibm.com");
+	  	Assert.assertEquals(RTTC005.LabelValue_TN(),"1234567890");
 	  	
-	  	driver.findElement(By.xpath("//input[@id='input-firstname']")).clear();
-	  	driver.findElement(By.xpath("//input[@id='input-firstname']")).sendKeys("reva");
-	  	driver.findElement(By.xpath("//input[@id='input-lastname']")).clear();
-	  	driver.findElement(By.xpath("//input[@id='input-lastname']")).sendKeys("sharma");
-	  	driver.findElement(By.xpath("//input[@id='input-email']")).clear();
-	  	driver.findElement(By.xpath("//input[@id='input-email']")).sendKeys("revasharma_deepak@gmail.com");
-	  	driver.findElement(By.xpath("//input[@id='input-telephone']")).clear();
-	  	driver.findElement(By.xpath("//input[@id='input-telephone']")).sendKeys("9876543210");
+	  	RTTC005.Label_FN_NewValue("reva");
+	  	RTTC005.Label_LN_NewValue("sharma");
+	  	RTTC005.Label_Email_NewValue("revasharma_deepak@gmail.com");
+	  	RTTC005.Label_TN_NewValue("9876543210");
 	  	
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-firstname']")).getAttribute("value"),"reva");
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-lastname']")).getAttribute("value"),"sharma");
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-email']")).getAttribute("value"),"revasharma_deepak@gmail.com");
-	  	Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-telephone']")).getAttribute("value"),"9876543210");
+	  	Assert.assertEquals(RTTC005.LabelValue_FN(),"reva");
+	  	Assert.assertEquals(RTTC005.LabelValue_LN(),"sharma");
+	  	Assert.assertEquals(RTTC005.LabelValue_Email(),"revasharma_deepak@gmail.com");
+	  	Assert.assertEquals(RTTC005.LabelValue_TN(),"9876543210");
 	  	
-	  	driver.findElement(By.xpath("//input[@class='btn btn-primary']")).click();
+	  	RTTC005.ClickContinueButton();
 	  	
 	  	Assert.assertEquals(driver.getTitle(), "My Account");
 	  	
-	  	Assert.assertEquals(driver.findElement(By.xpath("//div[@class='alert alert-success']")).getText(),"Success: Your account has been successfully updated.");
+	  	Assert.assertEquals(RTTC005.SuccessMessage(),"Success: Your account has been successfully updated.");
 	  	
 	  	Thread.sleep(5000);
   }

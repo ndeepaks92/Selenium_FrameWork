@@ -2,6 +2,7 @@ package com.training.sanity.tests;
 
 import org.testng.annotations.Test;
 
+import com.training.pom.RTTC_006_POM;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
 
@@ -13,16 +14,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 
 public class RTTC_006 {
 	
 	private WebDriver driver;
 	private String baseUrl;
 	private static Properties properties;
+	private RTTC_006_POM RTTC006;
 	
 	
 	  @BeforeClass
@@ -35,32 +35,34 @@ public class RTTC_006 {
   @BeforeMethod
   public void beforeMethod() {
 	  	driver = DriverFactory.getDriver(DriverNames.CHROME);
+	  	RTTC006 = new RTTC_006_POM(driver);
 		baseUrl = properties.getProperty("baseURL");
 		driver.get(baseUrl);
 		
-	  	driver.findElement(By.xpath("//i[@class='fa fa-user-o']")).click();
-	  	driver.findElement(By.xpath("//input[@id='input-email']")).sendKeys("Retail_test006@ibm.com");
-	  	driver.findElement(By.xpath("//input[@id='input-password']")).sendKeys("Qwerty12345");
-	  	driver.findElement(By.xpath("//input[@class='btn btn-primary']")).click();
+		RTTC006.ClickLoginRegisterButton();
+		RTTC006.sendUserName("Retail_test006@ibm.com");
+		RTTC006.sendPassword("Qwerty12345");
+		RTTC006.ClickLoginButton();
   }
   
   @Test
   public void Test06() throws InterruptedException {
-	  driver.findElement(By.xpath("//a[contains(text(),'Change your password')]")).click();
-	  String PageHeader = driver.findElement(By.xpath("//legend[contains(text(),'Your Password')]")).getText();
-	  	Assert.assertTrue(PageHeader.contains("Your Password"));
+	  	RTTC006.ChangePasswordLink();
+	   	Assert.assertTrue(RTTC006.PageHeader().contains("Your Password"));
 	  	
-	  driver.findElement(By.xpath("//input[@id='input-password']")).sendKeys("reva123");
-	  driver.findElement(By.xpath("//input[@id='input-confirm']")).sendKeys("reva123");
+	   	RTTC006.NewPassword("reva123");
+	   	RTTC006.ConfirmNewPassword("reva123");   	
+	   	
+	   	Thread.sleep(2000);
 	  
-	  Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-password']")).getAttribute("value"),"reva123");
-	  Assert.assertEquals(driver.findElement(By.xpath("//input[@id='input-confirm']")).getAttribute("value"),"reva123");
+	   	Assert.assertEquals(RTTC006.NewPasswordvalue(),"reva123");
+	   	Assert.assertEquals(RTTC006.ConfirmNewPasswordvalue(),"reva123");
 	  
-	  driver.findElement(By.xpath("//input[@class='btn btn-primary']")).click();
+	   	RTTC006.ContinueButton();
 	  
-	  Assert.assertEquals(driver.findElement(By.xpath("//div[@class='alert alert-success']")).getText(),"Success: Your password has been successfully updated.");
+	   	Assert.assertEquals(RTTC006.SuccessMessage(),"Success: Your password has been successfully updated.");
 	  
-	  Thread.sleep(5000);
+	   	Thread.sleep(2000);
 	  
   }
 
