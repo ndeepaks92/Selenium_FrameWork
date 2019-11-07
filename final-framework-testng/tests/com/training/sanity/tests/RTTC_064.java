@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 
 import com.training.dataproviders.LoginDataProviders;
 import com.training.dataproviders.RTTC_064_data;
-import com.training.pom.RTTC_035_POM;
 import com.training.pom.RTTC_064_POM;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;

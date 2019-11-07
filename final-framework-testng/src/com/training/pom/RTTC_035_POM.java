@@ -376,6 +376,11 @@ public class RTTC_035_POM {
 		return this.DesignTab_DDL.getAttribute("value");
 	}
 	
+	@FindBy(xpath="//div[@class='alert alert-success']")
+	private WebElement SuccessMessage;
+	public String VerifySuccessMessage() {
+		return this.SuccessMessage.getText();
+	}
 	
 	@FindBy(xpath="//i[@class='fa fa-save']")
 	private WebElement SaveButton;
