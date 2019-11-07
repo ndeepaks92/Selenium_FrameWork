@@ -66,7 +66,7 @@ public class RTTC_004_POM {
 	@FindBy(xpath="/html/body/div/section[2]/div/div/div/div/div/div/div/table")
 	private WebElement TableOrderHistory;
 	
-	public Boolean TableOrderHistoryPage(){
+	public boolean TableOrderHistoryPage(){
 		return this.TableOrderHistory.isDisplayed();
 	}
 	
@@ -120,7 +120,7 @@ public class RTTC_004_POM {
 
 	@FindBy(xpath="/html/body/div/section[2]/div/div/div/div/div/div/div/table")
 	private WebElement Table1_OrderDetail;
-	public Boolean Table1_OrderDetail(){
+	public boolean Table1_OrderDetail(){
 		return this.Table1_OrderDetail.isDisplayed();
 	}
 	
@@ -132,7 +132,7 @@ public class RTTC_004_POM {
 	
 	@FindBy(xpath="/html/body/div/section[2]/div/div/div/div/div/div/div/table[2]")
 	private WebElement Table2_OrderDetail;
-	public Boolean Table2_OrderDetail(){
+	public boolean Table2_OrderDetail(){
 		return this.Table2_OrderDetail.isDisplayed();
 	}
 	
@@ -150,13 +150,13 @@ public class RTTC_004_POM {
 	
 	@FindBy(xpath="/html/body/div/section[2]/div/div/div/div/div/div/div/div/table")
 	private WebElement Table3_OrderDetail;
-	public Boolean Table3_OrderDetail(){
+	public boolean Table3_OrderDetail(){
 		return this.Table3_OrderDetail.isDisplayed();
 	}
 	
 	@FindBy(xpath="/html/body/div/section[2]/div/div/div/div/div/div/div/div/table/tbody")
 	private WebElement Table3_Data_OrderDetail;
-	public Boolean Table3_Data_OrderDetail(){
+	public boolean Table3_Data_OrderDetail(){
 		return this.Table3_Data_OrderDetail.isDisplayed();
 	}
 	
@@ -192,7 +192,7 @@ public class RTTC_004_POM {
 	
 	@FindBy(xpath="/html/body/div/section[2]/div/div/div/div/div/div//div/table[3]")
 	private WebElement Table4_OrderDetail;
-	public Boolean Table4_OrderDetail(){
+	public boolean Table4_OrderDetail(){
 		return this.Table4_OrderDetail.isDisplayed();
 	}
 	
